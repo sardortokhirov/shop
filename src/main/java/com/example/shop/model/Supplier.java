@@ -1,5 +1,6 @@
-package com.example.shop.entity;
+package com.example.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,42 +13,46 @@ import java.util.List;
 @Table(name = "supplier")
 public class Supplier {
     @Id
-    @SequenceGenerator(
-            name = "supplier_sequence",
-            sequenceName = "supplier_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "supplier_sequence"
-    )
+    @SequenceGenerator(name = "supplier_sequence", sequenceName = "supplier_sequence", allocationSize = 1,initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_sequence")
     @Column(name = "supplier_id")
     private Long id;
 
     @Column(name = "first_name")
     private String firstName;
-
     @Column(name = "last_name")
     private String lastName;
 
     private String email;
-
     @Column(name = "card_number")
     private String cardNumber;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id")
-    private List<Supplier> supplierId;
+    private List<Product> products;
+
+    public Supplier() {
+    }
 
 
-    public Supplier( String firstName, String lastName, String email, String cardNumber) {
+    public Supplier(String firstName, String lastName, String email, String cardNumber, List<Product> products) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.cardNumber = cardNumber;
+        this.products = products;
+    }
+
+
+    public Supplier(String firstName, String lastName, String email, String cardNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.cardNumber = cardNumber;
     }
 
-    public Supplier() {
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public Long getId() {
@@ -90,14 +95,12 @@ public class Supplier {
         this.cardNumber = cardNumber;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
 
     @Override
     public String toString() {
-        return "Supplier{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "Supplier{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + '}';
     }
 }
