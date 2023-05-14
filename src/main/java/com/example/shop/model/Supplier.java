@@ -2,6 +2,9 @@ package com.example.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -13,16 +16,17 @@ import java.util.List;
 @Table(name = "supplier")
 public class Supplier {
     @Id
-    @SequenceGenerator(name = "supplier_sequence", sequenceName = "supplier_sequence", allocationSize = 1,initialValue = 1000)
+    @SequenceGenerator(name = "supplier_sequence", sequenceName = "supplier_sequence", allocationSize = 1, initialValue = 1000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_sequence")
     @Column(name = "supplier_id")
     private Long id;
-
+    @Size(min = 2, max = 50, message = "firstName have to be 2< x <50")
     @Column(name = "first_name")
     private String firstName;
+    @Size(min = 2, max = 50, message = "last_name have to be 2< x <50")
     @Column(name = "last_name")
     private String lastName;
-
+    @Email(message = "email not valid")
     private String email;
     @Column(name = "card_number")
     private String cardNumber;

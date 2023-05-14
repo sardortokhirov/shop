@@ -2,6 +2,7 @@ package com.example.shop.controller;
 
 import com.example.shop.model.Product;
 import com.example.shop.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> addNewProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addNewProduct(@Valid  @RequestBody Product product) {
         Product savedProduct = productService.addProduct(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{productId}")

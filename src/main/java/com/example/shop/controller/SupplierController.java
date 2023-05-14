@@ -2,6 +2,7 @@ package com.example.shop.controller;
 
 import com.example.shop.model.Supplier;
 import com.example.shop.service.SupplierService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class SupplierController {
     }
 
     @PostMapping
-    public ResponseEntity<Supplier> registerNewSupplier(@RequestBody Supplier supplier) {
+    public ResponseEntity<Supplier> registerNewSupplier(@Valid @RequestBody Supplier supplier) {
         Supplier savedSupplier = supplierService.addSupplier(supplier);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{supplierId}")

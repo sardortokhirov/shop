@@ -1,6 +1,8 @@
 package com.example.shop.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 /**
  * Date-5/8/2023
@@ -23,12 +25,12 @@ public class Product {
     )
     @Column(name = "product_id")
     private Long id;
-
+    @Size(min = 2, max = 50,message = "productName have to be 2< x <50")
     @Column(name = "product_name")
     private String productName;
 
     private String description;
-
+    @Positive
     private Integer price;
     @Column(name = "supplier_id")
     private Integer supplierId;
