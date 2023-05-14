@@ -37,7 +37,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> addNewProduct(@RequestBody Product product) {
-      Product savedProduct=  productService.addProduct(product);
+        Product savedProduct = productService.addProduct(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{productId}")
                 .buildAndExpand(savedProduct.getId())

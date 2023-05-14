@@ -26,8 +26,8 @@ public class SupplierService {
         if (supplierRepository.existsById(id)) {
             supplier.setId(id);
             supplierRepository.save(supplier);
-        }else {
-            System.err.println("User with id:"+id+" doesn't exist");
+        } else {
+            System.err.println("User with id:" + id + " doesn't exist");
         }
     }
 
