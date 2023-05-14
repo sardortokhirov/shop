@@ -1,10 +1,13 @@
 package com.example.shop.controller;
 
 import com.example.shop.model.Customer;
-import com.example.shop.model.Supplier;
 import com.example.shop.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * Date-5/10/2023
@@ -27,8 +30,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public void registerNewSupplier(@RequestBody Customer customer) {
-        customerService.addCustomer(customer);
+    public ResponseEntity<Customer> registerNewSupplier(@RequestBody Customer customer) {
+        Customer savedCustomer = customerService.addCustomer(customer);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{customerId}")
+                .buildAndExpand(savedCustomer.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping(path = "/{customerId}")

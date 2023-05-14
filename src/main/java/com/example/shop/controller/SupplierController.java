@@ -3,7 +3,11 @@ package com.example.shop.controller;
 import com.example.shop.model.Supplier;
 import com.example.shop.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * Date-5/9/2023
@@ -21,19 +25,25 @@ public class SupplierController {
     }
 
     @GetMapping(path = "{supplierId}")
-    public Supplier getSupplier(@PathVariable("supplierId") Long id){
+    public Supplier getSupplier(@PathVariable("supplierId") Long id) {
         return supplierService.getSupplier(id);
     }
 
     @PostMapping
-    public void registerNewSupplier(@RequestBody Supplier supplier){
-        supplierService.addSupplier(supplier);
+    public ResponseEntity<Supplier> registerNewSupplier(@RequestBody Supplier supplier) {
+        Supplier savedSupplier = supplierService.addSupplier(supplier);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{supplierId}")
+                .buildAndExpand(savedSupplier.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping(path = "{supplierId}")
-    public void updateSupplier(@PathVariable("supplierId") Long id,@RequestBody Supplier supplier){
-        supplierService.editSupplier(id,supplier);
+    public void updateSupplier(@PathVariable("supplierId") Long id, @RequestBody Supplier supplier) {
+        supplierService.editSupplier(id, supplier);
     }
+
     @DeleteMapping("/{supplierId}")
     public void deleteSupplier(@PathVariable("supplierId") Long id) {
         supplierService.deleteSupplier(id);

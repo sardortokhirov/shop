@@ -3,8 +3,11 @@ package com.example.shop.controller;
 import com.example.shop.model.Product;
 import com.example.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -33,8 +36,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public void addNewProduct(@RequestBody Product product) {
-        productService.addProduct(product);
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product product) {
+      Product savedProduct=  productService.addProduct(product);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{productId}")
+                .buildAndExpand(savedProduct.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{productId}")

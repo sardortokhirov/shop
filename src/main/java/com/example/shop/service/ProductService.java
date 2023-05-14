@@ -25,8 +25,9 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow();
     }
 
-    public void addProduct(Product product) {
+    public Product addProduct(Product product) {
         productRepository.save(product);
+        return product;
     }
 
     public void updateProduct(Long id, Product product) {

@@ -5,8 +5,6 @@ import com.example.shop.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Date-5/9/2023
  * Time-6:39 AM
@@ -33,8 +31,9 @@ public class SupplierService {
         }
     }
 
-    public void addSupplier(Supplier supplier) {
+    public Supplier addSupplier(Supplier supplier) {
         supplierRepository.save(supplier);
+        return supplier;
     }
 
     public void deleteSupplier(Long id) {
