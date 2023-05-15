@@ -1,9 +1,8 @@
 package com.example.shop.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -28,6 +27,7 @@ public class Supplier {
     private String lastName;
     @Email(message = "email not valid")
     private String email;
+    @NotEmpty
     @Column(name = "card_number")
     private String cardNumber;
 

@@ -1,6 +1,7 @@
 package com.example.shop.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -31,6 +32,7 @@ public class Product {
 
     private String description;
     @Positive
+    @NotEmpty
     private Integer price;
     @Column(name = "supplier_id")
     private Integer supplierId;
