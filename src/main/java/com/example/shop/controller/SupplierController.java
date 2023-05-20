@@ -16,6 +16,7 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping(path = "/supplier")
+@CrossOrigin(origins = "*")
 public class SupplierController {
 
     private final SupplierService supplierService;
