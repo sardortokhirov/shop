@@ -38,7 +38,7 @@ public class ApplicationConfig {
         return config.getAuthenticationManager();
     }
 
-
+    @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());

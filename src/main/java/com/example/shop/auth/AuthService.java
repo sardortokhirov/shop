@@ -33,6 +33,7 @@ public class AuthService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .cardNumber("111111111111")
                 .build();
         supplierRepository.save(supplier);
         var jwtToke = jwtService.generateToken(supplier);

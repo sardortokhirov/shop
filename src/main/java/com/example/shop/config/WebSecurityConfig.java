@@ -14,21 +14,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Date-7/2/2023
  * Time-7:10 AM
  */
+
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class WebSecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
+                .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**")
+                .requestMatchers("/api/v1/auth/**","/swagger-ui/**","/v3/api-docs")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
