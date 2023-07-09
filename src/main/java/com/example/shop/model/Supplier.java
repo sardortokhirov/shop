@@ -1,5 +1,6 @@
 package com.example.shop.model;
 
+import com.example.shop.token.Token;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Supplier implements UserDetails {
     @Id
-    @SequenceGenerator(name = "supplier_sequence", sequenceName = "supplier_sequence", allocationSize = 1, initialValue = 1000)
+    @SequenceGenerator(name = "supplier_sequence", sequenceName = "supplier_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_sequence")
     @Column(name = "supplier_id")
     private Long id;
@@ -36,12 +38,16 @@ public class Supplier implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
     @Email(message = "email not valid")
+    @Column(name = "email",unique = true)
     private String email;
     @NotEmpty
     @Column(name = "card_number")
     private String cardNumber;
 
     private String password;
+
+    @OneToMany(mappedBy ="supplier" )
+    private List<Token> tokens;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id")
@@ -52,6 +58,18 @@ public class Supplier implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
     }
 
     public void setId(Long id) {
